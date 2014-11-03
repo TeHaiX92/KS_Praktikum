@@ -13,7 +13,7 @@ environment = "LOCAL"
 debugLevel = [1,2,3,4,5,6]
 
 // Verzögerung in Millisekunden bei der Ausgabe von Utils.writelog (zum Mitlesen auf dem Terminal)
-debugDelay = 2000
+debugDelay = 5000
 
 
 // TCP-Schicht
