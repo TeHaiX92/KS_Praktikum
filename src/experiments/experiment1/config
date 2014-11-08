@@ -54,7 +54,7 @@ environments {
             ownMacAddr = "00:00:00:00:00:00"
 
             // Eigene TCP- und UDP-Portnummer
-            ownPort = 5140
+            ownPort = 5130
 
             // Standard-Router
             //routerIpAddr = "0.0.0.0"
