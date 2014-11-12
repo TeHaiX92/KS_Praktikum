@@ -41,6 +41,7 @@ class Server {
 
     /** Anwendungsprotokolldaten als String */
     String data
+    String data2
 
     /** Länge der gesendeten Daten */
     int dataLength = 0
@@ -143,17 +144,72 @@ Das Objekt ${->name} wurde angefragt!
                     case "daten":
                         // hier langen HTTP-body (einige kByte) erzeugen um lang anhaltende Übertragung
                         // zu erreichen
-                        data = "....."
+                        data = "\n" +
+                                "\n" +
+                                "Heute ist Dienstag, der 11.11.2014. Ich sitze hier in einem kleinen Raum bei der Arbeit und versuche " +
+                                "Inspirationen für die KS-Aufgabe zu erhalten." +
+                                "Es ist leider nicht so einfach auf Ideen zu kommen." +
+                                "\n" +
+                                "Ich sitze schon seit Minuten hierum und habe immer noch keine Erleuchtung." +
+                                "Was soll ich nun machen?" +
+                                "Da mein Kopf gerade vollkommend leer ist, versuche ich eine bekannte Methode," +
+                                "und zwar einfach irgendein Quatsch hinschreiben," +
+                                "was ich hoffe dann irgendwann zu einer goldene Idee wird." +
+                                "\n" +
+                                "Ich muss leider sagen, dass auch nach Minuten der Ausübung der Methode noch kein" +
+                                "Licht am Ende des dunklen Tunnel in Sicht ist." +
+                                "\n" +
+                                "Langsam frage ich mich, ob es überhaupt ein Ende des Tunnels gibt!" +
+                                "\n" +
+                                "Nun schweifen meine Gedanken unabsichtlich und ungewollt an sinnlosen Dingen, wie:" +
+                                "\n" +
+                                "was esse ich heute Abend?" +
+                                "\n" +
+                                "Hoffe morgen ist schönes Wetter!" +
+                                "\n" +
+                                "Was läuft denn gerade im Kino" +
+                                "\n" +
+                                /*"All das schwirren gleichzeitig in meinem Kopf rum, was ich überhaupt nicht gebrauchen kann." +
+                                "\n" +
+                                "Mir ist eingefallen, dass ich eine neue Serie entdeckt habe, die saukomisch ist." +
+                                "\n" +
+                                "PARELTA!!!!!" +
+                                "\n" +
+                                "Das ist der Name der Hauptfigut. In der Serie geht es um einen jungen speziellen Detektiv" +
+                                "in der erfundene Distrikt 99 von New York.\n" +
+                                "Der junge Cop ist für seine Arbeit geboren und liebt es, jedoch macht er seine Arbeit" +
+                                "auf seinen eigenen Art, was dem neuen Chef, der sehr viel von Ordnung und Regel hält," +
+                                "überhaupt nicht gefällt." +*/
+                                "\n"
+                        data2 = "\n" + "Das ist ein Test!" +
+                                "\n"
 
                         dataLength = data.size()
-                        reply = reply1 + data // dabei wird dataLength in reply1 eingetragen
+                        String[] test = data.split("\n")
+                        int step = 0
+                        int steps = test.size()
+                        int counter = 0
+                        while(dataLength>100) {
+                            data = test[step]
+                            reply = reply1 + data + counter // dabei wird dataLength in reply1 eingetragen
+                            stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort, srcPort: ownPort, sdu: reply)
+                            data = ""
+                            for (int i = step; i<steps; i++){
+                                data = data + test[i]
+                            }
+                            dataLength = data.size()
+                            step++
+                            counter++
+                        }
+                        reply = reply1 + data + counter
+                        stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort, srcPort: ownPort, sdu: reply)
                         break
                 }
                 Utils.writeLog("Server", "server", "sendet: $reply", 11)
 
                 // Antwort senden
-                stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,
-                        srcPort: ownPort, sdu: reply)
+                /*stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,
+                        srcPort: ownPort, sdu: reply)*/
             }
         } // while
     }

@@ -154,7 +154,7 @@ Host: www.sesam-strasse.com
 
         } // while
 
-        if (data) Utils.writeLog("Client", "client", "HTTP-Body empfangen: ${data[bodyStart..-1]}", 1)
+        if (data) Utils.writeLog("Client", "client", "HTTP-Body empfangen: ${data[bodyStart..-1]}", 1,)
     }
 
     //------------------------------------------------------------------------------

@@ -13,7 +13,7 @@ environment = "LOCAL"
 debugLevel = [1,2,3,4,5,6]
 
 // Verzögerung in Millisekunden bei der Ausgabe von Utils.writelog (zum Mitlesen auf dem Terminal)
-debugDelay = 1500
+debugDelay = 3000
 
 // TCP-Schicht
 deltaTimeOut = common.utils.Utils.sec05 // Periode fuer Sendetimeout-Countdown
@@ -42,7 +42,7 @@ environments {
             serverName = "meinhttpserver"
 
             // Durch HTTP-GET-Request zu ladenden Dokument
-            document = "index.html"
+            document = "daten"
 
             // TCP- und UDP-Portnummer der Serveranwendung
             serverPort = 5101
