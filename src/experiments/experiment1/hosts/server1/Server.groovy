@@ -139,7 +139,6 @@ Das Objekt ${->name} wurde angefragt!
                         dataLength = reply2.size()
                         reply = reply1 + temp // dabei wird dataLength in reply1 eingetragen
 
-                        sending = false
                         break
 
                     case "daten":
@@ -158,8 +157,6 @@ Das Objekt ${->name} wurde angefragt!
                             currentByte += length
                             sleep(300)
                         }
-
-                        sending = false
                         break
                 }
 
