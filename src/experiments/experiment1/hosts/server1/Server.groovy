@@ -148,13 +148,19 @@ Das Objekt ${->name} wurde angefragt!
                         //reply = reply1 + data // dabei wird dataLength in reply1 eingetragen
 
                         int currentByte = 0
-                        int length = 300
+                        int packageLength = 300
 
                         while (dataLength > currentByte) {
-                            int step = (currentByte + length > dataLength) ? dataLength - currentByte : length - 1
+                            int step = 0
+                            if (currentByte + packageLength > dataLength) {
+                                step = dataLength - currentByte
+                            } else {
+                                step = packageLength - 1
+                            }
 
                             stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort, srcPort: ownPort, sdu: data.subSequence(currentByte, currentByte + step))
-                            currentByte += length
+                            currentByte += packageLength
+
                             sleep(300)
                         }
                         break

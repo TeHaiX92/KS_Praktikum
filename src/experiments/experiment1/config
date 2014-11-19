@@ -42,8 +42,8 @@ environments {
             serverName = "meinhttpserver"
 
             // Durch HTTP-GET-Request zu ladenden Dokument
-            // document = "index.html"
-            document = "daten"
+            document = "index.html"
+            // document = "daten"
 
             // TCP- und UDP-Portnummer der Serveranwendung
             serverPort = 5101
