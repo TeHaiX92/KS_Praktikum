@@ -149,27 +149,27 @@ Das Objekt ${->name} wurde angefragt!
 
                         int currentByte = 0
                         int packageLength = 300
+			
+			while (dataLength > currentByte) {
+				int step = 0
+				if (currentByte + packageLength > dataLength) {
+					step = dataLength - currentByte
+				} else {
+					step = packageLength - 1
+				}
+				
+				stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort, srcPort: ownPort, sdu: data.subSequence(currentByte, currentByte + step))
+				currentByte += packageLength
+				
+				sleep(300)
+			}
+			break
+		}
 
-                        while (dataLength > currentByte) {
-                            int step = 0
-                            if (currentByte + packageLength > dataLength) {
-                                step = dataLength - currentByte
-                            } else {
-                                step = packageLength - 1
-                            }
-
-                            stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort, srcPort: ownPort, sdu: data.subSequence(currentByte, currentByte + step))
-                            currentByte += packageLength
-
-                            sleep(300)
-                        }
-                        break
-                }
-
-                Utils.writeLog("Server", "server", "sendet: $reply", 11)
+		Utils.writeLog("Server", "server", "sendet: $reply", 11)
 
                 // Antwort senden
-                stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
+                // stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
             }
         } // while
     }

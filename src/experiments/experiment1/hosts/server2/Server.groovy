@@ -44,14 +44,14 @@ class Server {
     GString reply1 =
             """\
 HTTP/1.1 200 OK
-Content-Length: ${->dataLength}
+Content-Length: ${-> dataLength}
 Content-Type: text/plain
 
 """
 
     GString reply2 =
             """\
-Das Objekt ${->name} wurde angefragt!
+Das Objekt ${-> name} wurde angefragt!
 """
 
     /** Ein Matcher-Objekt zur Verwendung regulärer Ausdruecke */
@@ -60,21 +60,26 @@ Das Objekt ${->name} wurde angefragt!
     /** Daten empfangen solange false */
     boolean ready = false
 
-
     //========================================================================================================
     // Methoden ANFANG
     // ========================================================================================================
 
-	String nameService(String name) {
-		String ip
-		switch(name) {
-			case "meinhttpserver": 	ip = "192.168.1.10"
-						break
-			default:		ip = ""
-						break
-		}
-		return ip
-	}
+    /**
+      * Umwandlung von Rechnernamen in Netzwerkadressen
+      */
+
+    String nameService(String name) {
+        String ip
+        switch (name) {
+            case "meinhttpserver":
+                ip = "192.168.1.10"
+                break
+            default:
+                ip = ""
+                break
+        }
+        return ip
+    }
 
     //------------------------------------------------------------------------------
     /**
@@ -109,7 +114,6 @@ Das Objekt ${->name} wurde angefragt!
         //------------------------------------------------
 
         Utils.writeLog("Server", "server", "startet", 1)
-
 
         //------------------------------------------------
 

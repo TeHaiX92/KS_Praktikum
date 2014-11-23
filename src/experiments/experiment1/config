@@ -36,33 +36,33 @@ environments {
     LOCAL {
         client {
             // IP-Adresse des Servers
-            serverIpAddr = "0.0.0.0"
+            serverIpAddr = "192.168.2.10"
 
             // Name des Servers
             serverName = "meinhttpserver"
 
             // Durch HTTP-GET-Request zu ladenden Dokument
-            document = "index.html"
-            // document = "daten"
+            // document = "index.html"
+            document = "daten"
 
-            // TCP- und UDP-Portnummer der Serveranwendung
+           // TCP- und UDP-Portnummer der Serveranwendung
             serverPort = 5101
 
             // Eigene IPv4-Adresse
-            ownIPAddr = "0.0.0.0"
+            ownIPAddr = "192.168.1.10"
 
             // Eigene MAC-Adresse
-            ownMacAddr = "00:00:00:00:00:00"
+            ownMacAddr = "01:01:01:01:01:01"
 
             // Eigene TCP- und UDP-Portnummer
             ownPort = 5187
 
             // Standard-Router
-            //routerIpAddr = "0.0.0.0"
+            //routerIpAddr = "192.168.1.1"
 
             // IP-Adresse des Nameservers
-            //nameServerIpAddr = "0.0.0.0"
-            //nameServerPort = 0
+            nameServerIpAddr = "192.168.1.11"
+            nameServerPort = 5300  
 
             // Festlegung der Netzwerkanschluesse
             //      virtual: "true" - ein Anschluss in ein virtuelles LAN,
@@ -102,8 +102,8 @@ environments {
 
         server {
             ownPort = 5101
-            defaultRouter = "0.0.0.0"
-            nameServer = "0.0.0.0"
+            defaultRouter = "192.168.1.1"
+            nameServer = "192.168.1.11"
 
             networkConnectors = [
                 [virtual: true,
@@ -125,7 +125,7 @@ environments {
 
         nameserver {
             ownPort = 5300
-            // defaultRouter = "0.0.0.0"
+            defaultRouter = "192.168.1.11"
 
             networkConnectors = [
                 [virtual: true,
