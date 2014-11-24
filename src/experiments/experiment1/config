@@ -42,8 +42,8 @@ environments {
             serverName = "meinhttpserver"
 
             // Durch HTTP-GET-Request zu ladenden Dokument
-            document = "index.html"
-            // document = "daten"
+            // document = "index.html"
+            document = "daten"
 
             // TCP- und UDP-Portnummer der Serveranwendung
             serverPort = 5101
@@ -61,8 +61,8 @@ environments {
             //routerIpAddr = "0.0.0.0"
 
             // IP-Adresse des Nameservers
-            //nameServerIpAddr = "0.0.0.0"
-            //nameServerPort = 0
+            nameServerIpAddr = "192.168.1.11"
+            nameServerPort = 5300
 
             // Festlegung der Netzwerkanschluesse
             //      virtual: "true" - ein Anschluss in ein virtuelles LAN,
@@ -79,8 +79,8 @@ environments {
             networkConnectors = [
                 [virtual: true,
                  lpName: "lp1",
-                 link: experiments.experiment1.links.P2PLink1.id,
-                 connector: experiments.experiment1.links.P2PLink1.CONNECTOR_1,
+                 link: experiments.experiment1.links.Hub1.id,
+                 connector: experiments.experiment1.links.Hub1.HUB_PORT_1,
                  macAddr: ownMacAddr,
                  ipAddr: ownIPAddr
                 ]
@@ -103,13 +103,13 @@ environments {
         server {
             ownPort = 5101
             defaultRouter = "0.0.0.0"
-            nameServer = "0.0.0.0"
+            nameServer = "192.168.1.11"
 
             networkConnectors = [
                 [virtual: true,
                  lpName: "lp1",
-                 link: experiments.experiment1.links.P2PLink1.id,
-                 connector: experiments.experiment1.links.P2PLink1.CONNECTOR_2,
+                 link: experiments.experiment1.links.Hub1.id,
+                 connector: experiments.experiment1.links.Hub1.HUB_PORT_2,
                  macAddr: "00:00:00:00:00:00",
                  ipAddr: "0.0.0.0"
                 ]
@@ -129,7 +129,7 @@ environments {
 
             networkConnectors = [
                 [virtual: true,
-                 lpName: "",
+                 lpName: "lp1",
                  link: experiments.experiment1.links.Hub1.id,
                  connector: experiments.experiment1.links.Hub1.HUB_PORT_3,
                  macAddr: "00:00:00:00:00:00",
