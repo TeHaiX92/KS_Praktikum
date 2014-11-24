@@ -61,8 +61,8 @@ environments {
             //routerIpAddr = "0.0.0.0"
 
             // IP-Adresse des Nameservers
-            //nameServerIpAddr = "0.0.0.0"
-            //nameServerPort = 0
+            nameServerIpAddr = "192.168.1.11"
+            nameServerPort = 5300
 
             // Festlegung der Netzwerkanschluesse
             //      virtual: "true" - ein Anschluss in ein virtuelles LAN,
