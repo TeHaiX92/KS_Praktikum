@@ -64,23 +64,6 @@ Das Objekt ${-> name} wurde angefragt!
     // Methoden ANFANG
     // ========================================================================================================
 
-    /**
-      * Umwandlung von Rechnernamen in Netzwerkadressen
-      */
-
-    String nameService(String name) {
-        String ip
-        switch (name) {
-            case "meinhttpserver":
-                ip = "192.168.1.10"
-                break
-            default:
-                ip = ""
-                break
-        }
-        return ip
-    }
-
     //------------------------------------------------------------------------------
     /**
      * Start der Anwendung

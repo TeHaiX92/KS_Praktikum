@@ -62,7 +62,7 @@ environments {
 
             // IP-Adresse des Nameservers
             nameServerIpAddr = "192.168.1.11"
-            nameServerPort = 5300  
+            nameServerPort = 5300
 
             // Festlegung der Netzwerkanschluesse
             //      virtual: "true" - ein Anschluss in ein virtuelles LAN,
