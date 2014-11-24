@@ -36,7 +36,7 @@ environments {
     LOCAL {
         client {
             // IP-Adresse des Servers
-            serverIpAddr = "0.0.0.0"
+            serverIpAddr = "192.168.2.10"
 
             // Name des Servers
             serverName = "meinhttpserver"
@@ -111,7 +111,7 @@ environments {
                  link: experiments.experiment1.links.Hub1.id,
                  connector: experiments.experiment1.links.Hub1.HUB_PORT_2,
                  macAddr: "00:00:00:00:00:00",
-                 ipAddr: "0.0.0.0"
+                 ipAddr: "192.168.2.10"
                 ]
             ]
 
@@ -133,7 +133,7 @@ environments {
                  link: experiments.experiment1.links.Hub1.id,
                  connector: experiments.experiment1.links.Hub1.HUB_PORT_3,
                  macAddr: "00:00:00:00:00:00",
-                 ipAddr: "0.0.0.0"
+                 ipAddr: "192.168.1.11"
                 ]
             ]
 
