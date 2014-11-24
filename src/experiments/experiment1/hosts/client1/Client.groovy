@@ -38,11 +38,17 @@ class Client {
     /** Zielportadresse */
     int serverPort
 
+	/** Nameserver-IP-Adresse */
+	String nameserverIpAddr
+
+	/** Nameserver-Portadresse */
+	int nameserverPort
+
     /** HTTP-Header fuer GET-Request **/
     String request =
             """\
 GET /${config.document} HTTP/1.1
-Host: www.sesam-strasse.com
+Host: ${config.serverName}
 
 """
 
@@ -109,32 +115,48 @@ Host: www.sesam-strasse.com
         // ------------------------------------------------------------
 
         // IPv4-Adresse und Portnummer des HTTP-Dienstes
-        serverIpAddr = config.serverIpAddr
+        // serverIpAddr = config.serverIpAddr
         serverPort = config.serverPort
+
+	    // NameServer
+	    nameserverIpAddr = config.nameServerIPAddr
+	    nameserverPort = config.nameServerPort
 
         // Eigener UDP-Port
         ownPort = config.ownPort
 
-        // Netzwerkstack initialisieren
-        stack = new Stack()
-        stack.start(config)
+	    // Netzwerkstack initialisieren
+	    stack = new Stack()
+	    stack.start(config)
 
-        // ------------------------------------------------------------
+	    // ------------------------------------------------------------
 
-        Utils.writeLog("Client", "client", "startet", 1)
+	    Utils.writeLog("Client", "client", "startet", 1)
 
-        // ------------------------------------------------------------
+	    // ------------------------------------------------------------
 
 
-        Utils.writeLog("Client", "client", "sendet: ${request}", 1)
+	    Utils.writeLog("Client", "client", "Ermittel Host: ${config.serverName}", 1)
 
-        // Datenempfang vorbereiten
-        data = ""
-        state = WAIT_LENGTH
+	    // Datenempfang vorbereiten
+	    data = ""
+	    state = WAIT_LENGTH
 
-        // HTTP-GET-Request absenden
-        stack.udpSend(dstIpAddr: serverIpAddr, dstPort: serverPort,
-                srcPort: ownPort, sdu: request)
+	    // HTTP-GET-Request absenden
+	    stack.udpSend(dstIpAddr: nameserverIpAddr, dstPort: nameserverPort,
+		    srcPort: ownPort, sdu: config.serverName)
+
+	    (d1, d2, rdata) = stack.udpReceive()
+	    matcher = (rdata =~ /ANSWER SECTION:(.*)/)
+	    serverIpAddr = (matcher[0] as List<String>)[1]
+	    if (!Utils.isIp(serverIpAddr)) {
+		    Utils.writeLog("Client", "client", "DNS could not find the ip for the host: $config.serverName", 1)
+	    }
+// ----------------------------------------------------------
+// HTTP-GET-Request absenden
+	    Utils.writeLog("Client", "client", "sendet: ${request} to $serverIpAddr", 1)
+	    stack.udpSend(dstIpAddr: serverIpAddr, dstPort: serverPort,
+		    srcPort: ownPort, sdu: request)
 
         // Empfang
         while (curBodyLength < bodyLength) {
