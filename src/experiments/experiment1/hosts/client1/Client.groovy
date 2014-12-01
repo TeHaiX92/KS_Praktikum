@@ -48,7 +48,7 @@ class Client {
 	String request =
 		"""\
 GET /${config.document} HTTP/1.1
-Host: ${config.serverName}
+
 
 """
 
@@ -57,6 +57,9 @@ Host: ${config.serverName}
 
 	/** Anwendungs-PDU */
 	String apdu
+
+    String srcIpAddr
+    int srcPort
 
 	/** Anwendungsprotokolldaten als String */
 	String data
@@ -119,8 +122,8 @@ Host: ${config.serverName}
 		serverPort = config.serverPort
 
 		// NameServer
-		//nameserverIpAddr = config.nameServerIpAddr
-		nameserverIpAddr = "192.168.1.11"
+		nameserverIpAddr = config.nameServerIpAddr
+		// nameserverIpAddr = "192.168.1.11"
 		nameserverPort = config.nameServerPort
 
 		// Eigener UDP-Port
@@ -147,14 +150,15 @@ Host: ${config.serverName}
 		stack.udpSend(dstIpAddr: nameserverIpAddr, dstPort: nameserverPort,
 			srcPort: ownPort, sdu: config.serverName)
 
-		(d1, d2, rdata) = stack.udpReceive()
-		matcher = (rdata =~ /ANSWER SECTION:(.*)/)
+		(srcIpAddr, srcPort, data) = stack.udpReceive()
+		/*matcher = (data =~ /ANSWER SECTION:(.*)/)
 		serverIpAddr = (matcher[0] as List<String>)[1]
 		if (!Utils.isIp(serverIpAddr)) {
 			Utils.writeLog("Client", "client", "DNS could not find the ip for the host: $config.serverName", 1)
-		}
+		}*/
 // ----------------------------------------------------------
 // HTTP-GET-Request absenden
+        serverIpAddr = data
 		Utils.writeLog("Client", "client", "sendet: ${request} to $serverIpAddr", 1)
 		stack.udpSend(dstIpAddr: serverIpAddr, dstPort: serverPort,
 			srcPort: ownPort, sdu: request)

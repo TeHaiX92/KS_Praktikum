@@ -250,11 +250,12 @@ class Utils {
         long ms = System.currentTimeMillis() % 1000
 
         if (dbgLvl in debugLevel) {
-            printf("%8s.%03d: %10s - %10s - %s\n", [new Date().format("HH-mm-ss"),
+            printf("\u001B[31m%8s.%03d:\u001B[34m %s \u001B[37m-\u001B[33m %s \u001B[37m- %s\u001B[37m\n", [new Date().format("HH-mm-ss"),
                     ms,
                     klass.size() <= 10 ? klass : klass[0..9],
                     method.size() <= 10 ? method : method[0..9],
                     comment])
+
 
             // u.U. Verzögern
             if (debugDelay > 0) sleep(debugDelay)
