@@ -278,7 +278,7 @@ class IpLayer {
 
         // Zugriff vor anderen Threads schützen
         synchronized(cntrlRT) {
-	        rt = routingTable.clone() as List<List>
+            rt = routingTable
         }
         return rt
     }
@@ -293,7 +293,7 @@ class IpLayer {
     synchronized void setRoutingTable(List routingTable) {
         // Zugriff vor anderen Threads schützen
         synchronized(cntrlRT) {
-	        this.routingTable = routingTable.clone() as List<List>
+            this.routingTable = routingTable
         }
     }
 
