@@ -157,7 +157,7 @@ class UdpLayer {
      */
     List receiving() {
 
-        Utils.writeLog("UdpLayer", "receiving", "warte auf Empfang an Port: ${ownPort}", 3)
+        Utils.writeLog("UdpLayer", "receiving", "warte auf Empfang an Port: \u001B[32m${ownPort}\u001B[37m", 3)
 
         // Warten auf Empfang
         UA_IDU ua_idu = toAppQ.take()

@@ -14,10 +14,6 @@ import java.util.regex.Matcher
  */
 class Client {
 
-	//========================================================================================================
-	// Vereinbarungen ANFANG
-	//========================================================================================================
-
 	/** Der Netzwerk-Protokoll-Stack */
 	Stack stack
 
@@ -29,8 +25,6 @@ class Client {
 
 	/** Stoppen der Threads wenn false */
 	Boolean run = true
-
-	//------------------------------------------------------------------------------
 
 	/** Ziel-IP-Adresse */
 	String serverIpAddr
@@ -89,22 +83,13 @@ GET /${config.document} HTTP/1.1
 	/** ID der TCP-Verbindung, wenn 0: Fehler */
 	int connId = 0
 
-	//========================================================================================================
-	// Hauptprogramm ANFANG
-	//========================================================================================================
-
-	//------------------------------------------------------------------------------
 	/**
 	 * Start der Anwendung
 	 */
 	static void main(String[] args) {
-		// Client-Klasse instanziieren
 		Client application = new Client()
-		// und starten
 		application.client()
 	}
-
-	//------------------------------------------------------------------------------
 
 	/**
 	 * Ein HTTP-Client mit rudimentärer Implementierung des Protokolls HTTP (Hypertext Transfer Protocol).<br/>
@@ -115,15 +100,11 @@ GET /${config.document} HTTP/1.1
 		// Empfangene Daten
 		String rdata
 
-		// ------------------------------------------------------------
-
 		// IPv4-Adresse und Portnummer des HTTP-Dienstes
-		// serverIpAddr = config.serverIpAddr
 		serverPort = config.serverPort
 
 		// NameServer
 		nameserverIpAddr = config.nameServerIpAddr
-		// nameserverIpAddr = "192.168.1.11"
 		nameserverPort = config.nameServerPort
 
 		// Eigener UDP-Port
@@ -133,14 +114,9 @@ GET /${config.document} HTTP/1.1
 		stack = new Stack()
 		stack.start(config)
 
-		// ------------------------------------------------------------
-
 		Utils.writeLog("Client", "client", "startet", 1)
 
-		// ------------------------------------------------------------
-
-
-		Utils.writeLog("Client", "client", "Ermittel Host: ${config.serverName}", 1)
+		Utils.writeLog("Client", "determine", "ermittle Netzwerk-Adresse \u001B[32m${config.serverName}\u001B[37m", 1)
 
 		// Datenempfang vorbereiten
 		data = ""
@@ -159,7 +135,7 @@ GET /${config.document} HTTP/1.1
 // ----------------------------------------------------------
 // HTTP-GET-Request absenden
         serverIpAddr = data
-		Utils.writeLog("Client", "client", "sendet: ${request} to $serverIpAddr", 1)
+		Utils.writeLog("Client", "send", "sendet: ${request} to $serverIpAddr", 1)
 		stack.udpSend(dstIpAddr: serverIpAddr, dstPort: serverPort,
 			srcPort: ownPort, sdu: request)
 
@@ -171,7 +147,7 @@ GET /${config.document} HTTP/1.1
 			// dummies
 			(d1, d2, rdata) = stack.udpReceive()
 
-			Utils.writeLog("Client", "client", "empfängt: $rdata", 1)
+			Utils.writeLog("Client", "receiving", "empfängt: $rdata", 1)
 
 			// Daten ergänzen
 			data += rdata
@@ -181,10 +157,8 @@ GET /${config.document} HTTP/1.1
 
 		} // while
 
-		if (data) Utils.writeLog("Client", "client", "HTTP-Body empfangen: ${data[bodyStart..-1]}", 1)
+		if (data) Utils.writeLog("Client", "receive", "HTTP-Body empfangen: ${data[bodyStart..-1]}", 1)
 	}
-
-	//------------------------------------------------------------------------------
 
 	/**
 	 * Fügt empfangene Daten zusammen

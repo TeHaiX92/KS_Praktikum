@@ -16,10 +16,6 @@ import java.util.regex.Matcher
  */
 class Server {
 
-    //========================================================================================================
-    // Vereinbarungen ANFANG
-    //========================================================================================================
-
     // Der Netzwerk-Protokoll-Stack
     Stack stack
 
@@ -65,12 +61,6 @@ Das Objekt ${->name} wurde angefragt!
     /** Daten empfangen solange false */
     boolean ready = false
 
-
-    //========================================================================================================
-    // Methoden ANFANG
-    //========================================================================================================
-
-    //------------------------------------------------------------------------------
     /**
      * Start der Anwendung
      */
@@ -81,32 +71,20 @@ Das Objekt ${->name} wurde angefragt!
         application.server()
     }
 
-    //------------------------------------------------------------------------------
-
-    //------------------------------------------------------------------------------
     /**
      * Ein HTTP-Server mit rudimentärer Implementierung des Protokolls HTTP (Hypertext Transfer Protocol)
      */
     void server() {
 
-        // ------------------------------------------------------------
-
         // Konfiguration holen
         config = Utils.getConfig("experiment1", "server")
-
-        // ------------------------------------------------------------
 
         // Netzwerkstack initialisieren
         stack = new Stack()
         stack.start(config)
         ownPort = config.ownPort
 
-        //------------------------------------------------
-
         Utils.writeLog("Server", "server", "startet", 1)
-
-
-        //------------------------------------------------
 
         while (run) {
 
@@ -175,7 +153,7 @@ Das Objekt ${->name} wurde angefragt!
                 Utils.writeLog("Server", "server", "sendet: $reply", 11)
 
                 // Antwort senden
-                //stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
+                stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
             }
         } // while
     }
