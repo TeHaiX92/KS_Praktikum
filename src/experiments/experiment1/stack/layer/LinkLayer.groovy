@@ -116,7 +116,7 @@ class LinkLayer {
 			// oder besser:
 
 			// Ist es eine eigene MAC-Adresse oder ein MAC-Broadcast ?
-			if (macFrame.dstMacAddr == macAddress ||
+			if (macFrame.dstMacAddr == connectors[cl_idu.lpName].getMacAddr() ||
 			macFrame.dstMacAddr == broadcastMacAddress) {
 				// Jaws
 				// Frame-Typ untersuchen
@@ -162,14 +162,15 @@ class LinkLayer {
 								Utils.writeLog("LinkLayer", "receive", "empfaengt ARP-Request und sendet Reply", 5)
 
 								ar_pdu.operation = ARP_REPLY
+									String tmp = ar_pdu.targetProtoAddr
 								ar_pdu.targetProtoAddr = ar_pdu.senderProtoAddr // IP-Adresse des Ziels
 								ar_pdu.targetHardAddr = ar_pdu.senderHardAddr // MAC-Zieladresse des Ziels
 
 								Connector connector = connectors[cl_idu.lpName]
-								ar_pdu.senderProtoAddr = ownIpAddrs[cl_idu.lpName] // Eigene IP-Adresse
+								ar_pdu.senderProtoAddr = tmp // Eigene IP-Adresse
 								ar_pdu.senderHardAddr = connector.getMacAddr() // Eigene MAC-Adresse
 
-								macFrame.dstMacAddr = macFrame.srcMacAddr // MAC-Zieladresse
+								macFrame.dstMacAddr = ar_pdu.targetHardAddr // MAC-Zieladresse
 								macFrame.srcMacAddr = ar_pdu.senderHardAddr
 								macFrame.sdu = ar_pdu
 								macFrame.type = ETHERTYPE_ARP // Typfeld
