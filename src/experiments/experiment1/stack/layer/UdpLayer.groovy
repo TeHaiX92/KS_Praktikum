@@ -85,7 +85,7 @@ class UdpLayer {
             // UDP-PDU entnehmen
             u_pdu = iu_idu.sdu as U_PDU
 
-            Utils.writeLog("UdpLayer", "receive", "uebernimmt  von IP: ${iu_idu}", 3)
+            Utils.writeLog("UdpLayer", "receive", "uebernimmt  von IP: \u001B[32m${iu_idu}\u001B[37m", 3)
 
 
             //TODO: Hier z.B. noch auf richtigen Zielport testen
@@ -125,7 +125,7 @@ class UdpLayer {
             // blockierendes Lesen von Anwendung
             au_idu = fromAppQ.take()
 
-            Utils.writeLog("UdpLayer", "send", "uebernimmt  von Anwendung: ${au_idu}", 3)
+            Utils.writeLog("UdpLayer", "send", "uebernimmt  von Anwendung: \u001B[32m${au_idu}\u001B[37m", 3)
 
             // UDP-PDU erzeugen
             u_pdu = new U_PDU()
