@@ -13,6 +13,6 @@ class I_PDU extends PDU {
     PDU sdu
 
     String toString() {
-        return String.format("I_PDU:[dstIpAddr:${dstIpAddr}, srcIpAddr:${srcIpAddr}, protocol:${protocol}, sdu:${sdu}]")
+        return String.format("I_PDU: [dstIpAddr: \u001B[32m${dstIpAddr}\u001B[0m, srcIpAddr: \u001B[32m${srcIpAddr}\u001B[0m, protocol: ${protocol}, sdu: ${sdu}]")
     }
 }

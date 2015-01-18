@@ -11,6 +11,6 @@ class L_PDU  extends PDU {
     PDU sdu
 
     String toString() {
-        return String.format("L_PDU:[dstMacAddr:${dstMacAddr}, srcMacAddr:${srcMacAddr}, type:${type}, sdu:${sdu}]")
+        return String.format("L_PDU: [dstMacAddr: \u001B[32m${dstMacAddr}\u001B[0m, srcMacAddr: \u001B[32m${srcMacAddr}\u001B[0m, type: ${type}, sdu: ${sdu}]")
     }
 }

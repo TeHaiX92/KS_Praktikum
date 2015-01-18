@@ -18,6 +18,6 @@ class IL_IDU extends IDU {
 
     /** Konvertieren in Text */
     String toString() {
-        return String.format("IL_IDU: [lpName: ${lpName}, nextHopAddr: ${nextHopAddr}, sdu: ${sdu}]")
+        return String.format("IL_IDU: [lpName: ${lpName}, nextHopAddr: \u001B[32m${nextHopAddr}\u001B[0m, sdu: ${sdu}]")
     }
 }

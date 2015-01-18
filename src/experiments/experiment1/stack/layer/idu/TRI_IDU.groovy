@@ -18,6 +18,6 @@ class TRI_IDU extends IDU {
 
     /** Konvertieren in Text */
     String toString() {
-        return String.format("TRI_IDU: [dstIpAddr: ${dstIpAddr}, protocol: ${protocol}, sdu: ${sdu}]")
+        return String.format("TRI_IDU: [dstIpAddr: \u001B[32m${dstIpAddr}\u001B[0m, protocol: ${protocol}, sdu: ${sdu}]")
     }
 }

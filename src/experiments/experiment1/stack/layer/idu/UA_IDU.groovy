@@ -16,6 +16,6 @@ class UA_IDU extends IDU {
 
     /** Konvertieren in Text */
     String toString() {
-        return String.format("UA_IDU: [dsrcIpAddr: ${srcIpAddr}, srcPort: ${srcPort}, sdu: ${sdu}]")
+        return String.format("UA_IDU: [srcIpAddr: \u001B[32m${srcIpAddr}\u001B[0m, srcPort: \u001B[32m${srcPort}\u001B[m, sdu: ${sdu}]")
     }
 }

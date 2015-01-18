@@ -10,7 +10,7 @@ class U_PDU extends PDU  {
     String sdu
 
     String toString() {
-        return String.format("UPDU:[dstPort:${dstPort}, srcPort:${srcPort}, sdu:${sdu}]")
+        return String.format("UPDU: [dstPort: \u001B[32m${dstPort}\u001B[0m, srcPort: \u001B[32m${srcPort}\u001B[0m, sdu: ${sdu}]")
     }
 }
 

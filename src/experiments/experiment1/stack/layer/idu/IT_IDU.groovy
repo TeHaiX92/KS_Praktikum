@@ -18,6 +18,6 @@ class IT_IDU extends IDU {
 
     /** Konvertieren in Text */
     String toString() {
-        return String.format("IT_IDU: [srcIpAddr: ${srcIpAddr}, srcPort: ${srcPort}, sdu: ${sdu}]")
+        return String.format("IT_IDU: [srcIpAddr: \u001B[32m${srcIpAddr}\u001B[0m, srcPort: \u001B[32m${srcPort}\u001B[0m, sdu: ${sdu}]")
     }
 }

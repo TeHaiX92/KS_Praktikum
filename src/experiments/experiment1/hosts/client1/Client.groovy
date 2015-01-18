@@ -114,9 +114,9 @@ GET /${config.document} HTTP/1.1
 		stack = new Stack()
 		stack.start(config)
 
-		Utils.writeLog("Client", "client", "startet", 1)
+		Utils.writeLog("Client", "starts", "startet", 1)
 
-		Utils.writeLog("Client", "determine", "ermittle Netzwerk-Adresse \u001B[32m${config.serverName}\u001B[37m", 1)
+		Utils.writeLog("Client", "determine", "ermittle Netzwerk-Adresse \u001B[36m${config.serverName}\u001B[0m", 1)
 
 		// Datenempfang vorbereiten
 		data = ""

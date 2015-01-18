@@ -22,6 +22,6 @@ class AT_IDU extends IDU {
 
     /** Konvertieren in Text */
     String toString() {
-        return String.format("AT_IDU: [connId: ${connId}, command: ${command}, dstIpAddr: ${dstIpAddr}, dstPort: ${dstPort}, sdu: ${sdu}]")
+        return String.format("AT_IDU: [connId: ${connId}, command: ${command}, dstIpAddr: \u001B[32m${dstIpAddr}\u001B[0m, dstPort: \u001B[32m${dstPort}\u001B[0m, sdu: ${sdu}]")
     }
 }
