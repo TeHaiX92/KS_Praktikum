@@ -100,12 +100,12 @@ class Router1 {
         (iPAddr, port, rInfo) = stack.udpReceive()
 
         // Jetzt aktuelle Routingtablle holen:
-        // rt = stack.getRoutingtable()
+        List rt = stack.getRoutingtable()
         // neue Routinginformationen bestimmen
         //    zum Zerlegen einer Zeichenkette siehe "tokenize()"
         // extrahieren von Information, dann iInfo als !Zeichenkette! erzeugen ...
         // Routingtabelle an Vermittlungsschicht uebergeben:
-        // stack.setRoutingtable(rt)
+         stack.setRoutingtable(rt)
         // und neue Routinginformationen verteilen:
         // rInfo = ...
         // sendToNeigbors(rInfo)

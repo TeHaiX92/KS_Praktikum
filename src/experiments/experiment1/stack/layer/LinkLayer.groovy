@@ -250,7 +250,7 @@ class LinkLayer {
             macFrame?.dstMacAddr = arpTable[il_idu.nextHopAddr]
 
             // Wurde die MAC-Adresse fuer das naechste Ziel in der ARP-Tabelle gefunden?
-            if (!macFrame.dstMacAddr) {
+            /*if (!macFrame.dstMacAddr) {
                 // Nein -> ARP verwenden
 
                 // Warten auf ARP-Reply, wird in "receive" geaendert
@@ -286,7 +286,7 @@ class LinkLayer {
 
                 // MAC-Ziel-Adresse in MAC-Frame einsetzen
                 macFrame.dstMacAddr = nextMacAddr
-            }
+            }*/
 
 			macFrame.sdu = il_idu.sdu // PDU entnehmen
 			macFrame.type = ETHERTYPE_IP // Typfeld

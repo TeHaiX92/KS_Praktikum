@@ -114,6 +114,10 @@ Das Objekt ${->name} wurde angefragt!
                         String temp = reply2 // name wird eingetragen
                         dataLength = reply2.size()
                         reply = reply1 + temp // dabei wird dataLength in reply1 eingetragen
+
+                        // Antwort senden
+                        stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
+
                         break
 
                     case "daten":
