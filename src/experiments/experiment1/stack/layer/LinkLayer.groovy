@@ -167,7 +167,7 @@ class LinkLayer {
 								ar_pdu.targetHardAddr = ar_pdu.senderHardAddr // MAC-Zieladresse des Ziels
 
 								Connector connector = connectors[cl_idu.lpName]
-								ar_pdu.senderProtoAddr = tmp // Eigene IP-Adresse
+								ar_pdu.senderProtoAddr = ownIpAddrs[cl_idu.lpName] // Eigene IP-Adresse
 								ar_pdu.senderHardAddr = connector.getMacAddr() // Eigene MAC-Adresse
 
 								macFrame.dstMacAddr = ar_pdu.targetHardAddr // MAC-Zieladresse
@@ -261,7 +261,7 @@ class LinkLayer {
                 AR_PDU ar_pdu = new AR_PDU()
                 ar_pdu.operation = ARP_REQUEST
                 ar_pdu.senderProtoAddr = ownIpAddrs[lpName] // IP-Adresse des Senders
-                ar_pdu.senderHardAddr = macAddress // MAC-Adresse des Senders
+                ar_pdu.senderHardAddr = connector.macAddr // MAC-Adresse des Senders
 
                 ar_pdu.targetProtoAddr = il_idu.nextHopAddr // IP-Adresse des ARP-Ziels
                 ar_pdu.targetHardAddr = "00:00:00:00:00:00" // Gesuchter Eintrag
@@ -282,7 +282,7 @@ class LinkLayer {
                 String nextMacAddr = arpQ.take()
 
                 // Arp-Tabelle aktualisieren
-	            arpTable[i_pdu.dstIpAddr] = nextMacAddr
+	            arpTable[il_idu.nextHopAddr] = nextMacAddr
 
                 // MAC-Ziel-Adresse in MAC-Frame einsetzen
                 macFrame.dstMacAddr = nextMacAddr
