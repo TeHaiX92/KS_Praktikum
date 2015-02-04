@@ -90,13 +90,14 @@ environments {
             // [["Ziel-IP-Adresse", "Prefix", "Router-IP-Adresse", "Anschluss"], ...]
             // Für Routen in das eigene IP-Subnetz ist die Router-IP-Adresse die eigene IP-Adresse:
             // z.B.: ["192.168.1.0", "255.255.255.0", "192.168.1.10", "lp1"]
-            routingTable = [
+            routingTable = [["192.168.1.0", "255.255.255.0", "192.168.1.10", "lp1"],
+                            ["192.168.2.0", "255.255.255.0", "192.168.1.1", "lp1"]
                            ]
 
             // ARP-Tabelle
             // ["IP-Adresse": "MAC-Adresse", ...]
             arpTable = ["192.168.1.11" : "01:01:01:02:02:02",
-                        "192.168.2.10" : "01:01:01:03:03:03"
+                        "192.168.2.10" : "01:01:01:04:04:04"
                         ]
         }
 
@@ -117,7 +118,7 @@ environments {
                 ]
             ]
 
-            routingTable = [
+            routingTable = [["192.168.1.10", "255.255.255.0", "192.168.2.1", "lp2"]
                            ]
 
             arpTable = ["192.168.1.10" : "01:01:01:01:01:01", //client
@@ -141,7 +142,7 @@ environments {
                 ]
             ]
 
-            routingTable = [
+            routingTable = [["192.168.1.10", "255.255.255.0", "192.168.1.10", "lp1"]
                 ]
 
             arpTable = ["192.168.1.10" : "01:01:01:01:01:01", // client
@@ -159,7 +160,7 @@ environments {
                  lpName: "lp1",
                  link: experiments.experiment1.links.Hub1.id,
                  connector: experiments.experiment1.links.Hub1.HUB_PORT_2,
-                 macAddr: "01:01:01:03:03:03",
+                 macAddr: "01:01:01:04:04:04",
                  ipAddr: "192.168.1.1"
                 ],
 
@@ -173,8 +174,8 @@ environments {
 
             ]
 
-            routingTable = [["192.168.1.10", "255.255.255.0", "192.168.1.1", "lp1"],
-                            ["192.168.2.10", "255.255.255.0", "192.168.2.1", "lp2"]
+            routingTable = [["192.168.1.0", "255.255.255.0", "192.168.1.1", "lp1"],
+                            ["192.168.2.0", "255.255.255.0", "192.168.2.1", "lp2"]
                     ]
 
             arpTable = [:]
