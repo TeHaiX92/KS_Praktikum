@@ -142,7 +142,7 @@ class IpLayer {
                         // Nein
                         il_idu.nextHopAddr = nextHopAddr
 
-                    Utils.writeLog("IpLayer", "receive", "forwarding: ${li_idu}", 4)
+                    Utils.writeLog("IpLayer", "receive", "forwarding: ${il_idu}", 4)
 
                     // Daten an Link-Schicht uebergeben
                     toLinkQ.put(il_idu)
@@ -186,10 +186,10 @@ class IpLayer {
 
 			linkPortName = "lp1"
 			//nextHopAddr = ownIpAddrs[linkPortName]
-			nextHopAddr = ti_idu.dstIpAddr
+			nextHopAddr = ownIpAddrs[linkPortName]
 
 //            // Nächstes Gerät (next hop) auf dem Pfad zum Zielgerät suchen
-//            (linkPortName, nextHopAddr) = findNextHop(ti_idu.dstIpAddr)
+            (linkPortName, nextHopAddr) = findNextHop(ti_idu.dstIpAddr)
 
 			// Nächsten Hop gefunden?
 			if (linkPortName && nextHopAddr) {
@@ -223,10 +223,10 @@ class IpLayer {
                     il_idu.nextHopAddr = i_pdu.dstIpAddr
                 else
                     // Nein
-                    il_idu.nextHopAddr = defaultRouter
+                    il_idu.nextHopAddr = nextHopAddr
 
 				// IP-Adresse des naechsten Geraetes auf dem Pfad zum Ziel eintragen
-				il_idu.nextHopAddr = nextHopAddr
+//				il_idu.nextHopAddr = nextHopAddr
 
 				// Daten an Link-Schicht uebergeben
 				toLinkQ.put(il_idu)

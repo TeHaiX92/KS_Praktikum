@@ -13,7 +13,7 @@ environment = "LOCAL"
 debugLevel = [1,2,3,4,5,6]
 
 // Verzögerung in Millisekunden bei der Ausgabe von Utils.writelog (zum Mitlesen auf dem Terminal)
-debugDelay = 300
+debugDelay = 1000
 
 // TCP-Schicht
 deltaTimeOut = common.utils.Utils.sec05 // Periode fuer Sendetimeout-Countdown
@@ -42,8 +42,8 @@ environments {
             serverName = "meinhttpserver"
 
             // Durch HTTP-GET-Request zu ladenden Dokument
-             document = "index.html"
-            // document = "daten"
+            // document = "index.html"
+             document = "daten"
 
             // TCP- und UDP-Portnummer der Serveranwendung
             serverPort = 5101
@@ -90,15 +90,13 @@ environments {
             // [["Ziel-IP-Adresse", "Prefix", "Router-IP-Adresse", "Anschluss"], ...]
             // Für Routen in das eigene IP-Subnetz ist die Router-IP-Adresse die eigene IP-Adresse:
             // z.B.: ["192.168.1.0", "255.255.255.0", "192.168.1.10", "lp1"]
-            routingTable = [["192.168.1.0", "255.255.255.0", "192.168.1.10", "lp1"],
+            routingTable = [["192.168.1.0", "255.255.255.0", "192.168.1.11", "lp1"],
                             ["192.168.2.0", "255.255.255.0", "192.168.1.1", "lp1"]
                            ]
 
             // ARP-Tabelle
             // ["IP-Adresse": "MAC-Adresse", ...]
-            arpTable = ["192.168.1.11" : "01:01:01:02:02:02",
-                        "192.168.2.10" : "01:01:01:04:04:04"
-                        ]
+            arpTable = [:]
         }
 
         //=============================================================================================
@@ -118,12 +116,10 @@ environments {
                 ]
             ]
 
-            routingTable = [["192.168.1.10", "255.255.255.0", "192.168.2.1", "lp2"]
+            routingTable = [["192.168.1.0", "255.255.255.0", "192.168.2.1", "lp2"]
                            ]
 
-            arpTable = ["192.168.1.10" : "01:01:01:01:01:01", //client
-                        "192.168.2.10" : "01:01:01:03:03:03" //server
-                        ]
+            arpTable = [:]
         }
 
         //=============================================================================================
@@ -142,12 +138,10 @@ environments {
                 ]
             ]
 
-            routingTable = [["192.168.1.10", "255.255.255.0", "192.168.1.10", "lp1"]
+            routingTable = [["192.168.1.0", "255.255.255.0", "192.168.1.10", "lp1"]
                 ]
 
-            arpTable = ["192.168.1.10" : "01:01:01:01:01:01", // client
-                        "192.168.1.11" : "01:01:01:02:02:02" // nameserver
-                        ]
+            arpTable = [:]
         }
         //=============================================================================================
 

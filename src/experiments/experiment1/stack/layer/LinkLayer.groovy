@@ -32,8 +32,6 @@ class LinkLayer {
 	// Daten ANFANG
 	//========================================================================================================
 
-	String macAddress
-
 	//------------------------------------------------------------------------------
 	/** Dient der Bestimmung der MAC-Adresse eines Geräts auf Grund seiner IP-Adresse */
 	Map arpTable
@@ -162,7 +160,7 @@ class LinkLayer {
 								Utils.writeLog("LinkLayer", "receive", "empfaengt ARP-Request und sendet Reply", 5)
 
 								ar_pdu.operation = ARP_REPLY
-									String tmp = ar_pdu.targetProtoAddr
+									//String tmp = ar_pdu.targetProtoAddr
 								ar_pdu.targetProtoAddr = ar_pdu.senderProtoAddr // IP-Adresse des Ziels
 								ar_pdu.targetHardAddr = ar_pdu.senderHardAddr // MAC-Zieladresse des Ziels
 
@@ -261,10 +259,10 @@ class LinkLayer {
                 AR_PDU ar_pdu = new AR_PDU()
                 ar_pdu.operation = ARP_REQUEST
                 ar_pdu.senderProtoAddr = ownIpAddrs[lpName] // IP-Adresse des Senders
-                ar_pdu.senderHardAddr = connector.macAddr // MAC-Adresse des Senders
+                ar_pdu.senderHardAddr = connector.getMacAddr() // MAC-Adresse des Senders
 
                 ar_pdu.targetProtoAddr = il_idu.nextHopAddr // IP-Adresse des ARP-Ziels
-                ar_pdu.targetHardAddr = "00:00:00:00:00:00" // Gesuchter Eintrag
+                ar_pdu.targetHardAddr = "" // Gesuchter Eintrag
 
                 macFrame.dstMacAddr = broadcastMacAddress // Broadcast-MAC-Zieladresse
                 macFrame.sdu = ar_pdu
