@@ -144,7 +144,8 @@ class LinkLayer {
 									// Gesuchte MAC-Adresse uebernehmen
 									String macAddr = ar_pdu.senderHardAddr
 
-									Utils.writeLog("LinkLayer", "receive", "empfaengt ARP-Reply von ${ar_pdu.senderProtoAddr}: ${macAddr}", 5)
+									//Utils.writeLog("LinkLayer", "receive", "ARP-Reply von \u001B[36m${ar_pdu.senderProtoAddr}\u001B[0m erhalten: \u001B[36m${macAddr}\u001B[0m", 5)
+									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Reply\u001B[0m erhalten", 5)
 
 									// MAC-Adresse an wartenden Sender-Thread uebergeben
 									arpQ.put(macAddr)
@@ -154,31 +155,37 @@ class LinkLayer {
 							case ARP_REQUEST:
 								// Wird eigene MAC-Adresse abgefragt?
 								if (ar_pdu.targetProtoAddr == ownIpAddrs[cl_idu.lpName]) {
-								// Ja
-								// ARP-Reply senden
+									// Ja
+									// ARP-Reply senden
 
-								Utils.writeLog("LinkLayer", "receive", "empfaengt ARP-Request und sendet Reply", 5)
+									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Request\u001B[0m erhalten", 5)
+									Utils.writeLog("LinkLayer", "send", "sende \u001B[35mARP-Reply\u001B[0m", 5)
 
-								ar_pdu.operation = ARP_REPLY
-									//String tmp = ar_pdu.targetProtoAddr
-								ar_pdu.targetProtoAddr = ar_pdu.senderProtoAddr // IP-Adresse des Ziels
-								ar_pdu.targetHardAddr = ar_pdu.senderHardAddr // MAC-Zieladresse des Ziels
+									ar_pdu.operation = ARP_REPLY
+									ar_pdu.targetProtoAddr = ar_pdu.senderProtoAddr // IP-Adresse des Ziels
+									ar_pdu.targetHardAddr = ar_pdu.senderHardAddr // MAC-Zieladresse des Ziels
 
-								Connector connector = connectors[cl_idu.lpName]
-								ar_pdu.senderProtoAddr = ownIpAddrs[cl_idu.lpName] // Eigene IP-Adresse
-								ar_pdu.senderHardAddr = connector.getMacAddr() // Eigene MAC-Adresse
+									Connector connector = connectors[cl_idu.lpName]
+									ar_pdu.senderProtoAddr = ownIpAddrs[cl_idu.lpName] // Eigene IP-Adresse
+									ar_pdu.senderHardAddr = connector.getMacAddr() // Eigene MAC-Adresse
 
-								macFrame.dstMacAddr = ar_pdu.targetHardAddr // MAC-Zieladresse
-								macFrame.srcMacAddr = ar_pdu.senderHardAddr
-								macFrame.sdu = ar_pdu
-								macFrame.type = ETHERTYPE_ARP // Typfeld
+									macFrame.dstMacAddr = ar_pdu.targetHardAddr // MAC-Zieladresse
+									macFrame.srcMacAddr = ar_pdu.senderHardAddr
+									macFrame.sdu = ar_pdu
+									macFrame.type = ETHERTYPE_ARP // Typfeld
 
-								// MAC-Frame mit ARP-PDU an Anschluss uebergeben
-								// IDU erzeugen
-								lc_idu = new LC_IDU()
-								lc_idu.sdu = macFrame
-								connector.send(lc_idu)
-							}
+									// MAC-Frame mit ARP-PDU an Anschluss uebergeben
+									// IDU erzeugen
+									lc_idu = new LC_IDU()
+									lc_idu.sdu = macFrame
+									connector.send(lc_idu)
+
+									Utils.writeLog("LinkLayer", "send", "uebergibt an Anschluss ${cl_idu.lpName}: ${lc_idu}", 5)
+								}
+								else {
+									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Request\u001B[0m erhalten", 5)
+									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Request\u001B[0m verwerfen", 5)
+								}
 								break
 						}
 						break
@@ -262,13 +269,14 @@ class LinkLayer {
                 ar_pdu.senderHardAddr = connector.getMacAddr() // MAC-Adresse des Senders
 
                 ar_pdu.targetProtoAddr = il_idu.nextHopAddr // IP-Adresse des ARP-Ziels
-                ar_pdu.targetHardAddr = "" // Gesuchter Eintrag
+                ar_pdu.targetHardAddr = "unknown" // Gesuchter Eintrag
 
                 macFrame.dstMacAddr = broadcastMacAddress // Broadcast-MAC-Zieladresse
                 macFrame.sdu = ar_pdu
                 macFrame.type = ETHERTYPE_ARP // Typfeld
 
-                Utils.writeLog("LinkLayer", "send", "sendet ARP-Request: ${lc_idu}", 5)
+                Utils.writeLog("LinkLayer", "send", "sende \u001B[35mARP-Request\u001B[0m", 5)
+			 Utils.writeLog("LinkLayer", "send", "uebergibt an Anschluss ${lpName}: ${lc_idu}", 5)
 
                 // MAC_Frame mit ARP-PDU an Anschluss uebergeben
                 connector.send(lc_idu)

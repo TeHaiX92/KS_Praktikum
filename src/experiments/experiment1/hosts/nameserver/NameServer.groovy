@@ -48,17 +48,17 @@ class NameServer {
 		stack.start(config)
 
 		// Name
-		Utils.writeLog("Nameserver", "starts", "startet", 1)
+		Utils.writeLog("Nameserver", "nameserver", "startet", 1)
 
 		while (run) {
 			// auf Empfang ueber UDP warten
 			(srcIpAddr, srcPort, data) = stack.udpReceive()
 
 			// Namen über nameTable in IP-Adresse aufloesen
-			Utils.writeLog("Nameserver", "receive", "Anfrage \u001B[36m${data}\u001B[0m wurde erhalten", 1)
+			Utils.writeLog("Nameserver", "receive", "DNS-Anfrage zur Aufloesung des Hosts \u001B[36m${data}\u001B[0m wurde erhalten", 1)
 			String ipAddr = nameTable.get(data)
 			if (ipAddr) {
-				Utils.writeLog("Nameserver", "solve", "Anfrage aufgeloest in \u001B[36m$ipAddr\u001B[0m", 1)
+				Utils.writeLog("Nameserver", "solve", "DNS-Anfrage aufgeloest in \u001B[36m$ipAddr\u001B[0m", 1)
 			} else {
 				Utils.writeLog("Nameserver", "error", "\u001B[36m$data\u001B[0m wurde nicht gefunden", 1)
 				ipAddr = "0.0.0.0"

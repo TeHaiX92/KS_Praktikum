@@ -13,7 +13,7 @@ environment = "LOCAL"
 debugLevel = [1,2,3,4,5,6]
 
 // Verzögerung in Millisekunden bei der Ausgabe von Utils.writelog (zum Mitlesen auf dem Terminal)
-debugDelay = 50
+debugDelay = 300
 
 // TCP-Schicht
 deltaTimeOut = common.utils.Utils.sec05 // Periode fuer Sendetimeout-Countdown
@@ -125,7 +125,7 @@ environments {
         //=============================================================================================
 
         nameserver {
-            ownPort = 5111
+            ownPort = 5300
             // defaultRouter = "0.0.0.0"
 
             networkConnectors = [
@@ -184,8 +184,8 @@ environments {
             arpTable = [:]
 
             // Hier sind die IP-Adressen der benachbarten Router einzutragen
-            neighborTable = [["192.168.5.2", 5145],
-                             ["192.168.6.2", 5136]
+            neighborTable = [["192.168.4.2", 5145],
+                             ["192.168.3.1", 5136]
                             ]
         }
         //=============================================================================================
@@ -219,8 +219,8 @@ environments {
 
             arpTable = [:]
 
-            neighborTable = [["192.168.4.1", 5134],
-                             ["192.168.5.1", 5652]
+            neighborTable = [["192.168.3.1", 5134],
+                             ["192.168.6.1", 5652]
                             ]
         }
         //=============================================================================================
@@ -263,7 +263,7 @@ environments {
 
             arpTable = [:]
 
-            neighborTable = [["192.168.5.2", 5145],
+            neighborTable = [["192.168.5.1", 5145],
                              ["192.168.6.2", 5136]
                             ]
         }
@@ -299,7 +299,7 @@ environments {
             arpTable = [:]
 
             neighborTable = [["192.168.4.1", 5134],
-                             ["192.168.5.1", 5652]
+                             ["192.168.5.2", 5652]
                             ]
         }
     }

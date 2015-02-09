@@ -82,7 +82,7 @@ Das Objekt ${->name} wurde angefragt!
         stack.start(config)
         ownPort = config.ownPort
 
-        Utils.writeLog("Server", "starts", "startet", 1)
+        Utils.writeLog("Server", "server1", "startet", 1)
 
         while (run) {
 

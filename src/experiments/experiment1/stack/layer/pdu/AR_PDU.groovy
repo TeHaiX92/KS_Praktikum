@@ -12,7 +12,7 @@ class AR_PDU extends PDU {
     int operation
 
     String toString() {
-        return String.format("AR_PDU:[operation:${operation}, targetHardAddr:${targetHardAddr}, targetProtoAddr:${targetProtoAddr}, " +
-                "senderHardAddr:${senderHardAddr}, senderProtoAddr:${senderProtoAddr}]")
+        return String.format("AR_PDU:[operation:${operation}, targetHardAddr: \u001B[35m${targetHardAddr}\u001B[0m, targetProtoAddr: \u001B[35m${targetProtoAddr}\u001B[0m, " +
+                "senderHardAddr: \u001B[35m${senderHardAddr}\u001B[0m, senderProtoAddr: \u001B[35m${senderProtoAddr}\u001B[0m]")
     }
 }
