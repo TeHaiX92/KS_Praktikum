@@ -185,7 +185,7 @@ environments {
 
             // Hier sind die IP-Adressen der benachbarten Router einzutragen
             neighborTable = [["192.168.4.2", 5145],
-                             ["192.168.3.1", 5136]
+                             ["192.168.3.2", 5136]
                             ]
         }
         //=============================================================================================
@@ -231,19 +231,19 @@ environments {
 
             networkConnectors = [
                 [virtual: true,
-                 lpName: "lp6",
+                 lpName: "lp5",
                  link: experiments.experiment1.links.P2PLink4.id,
                  connector: experiments.experiment1.links.P2PLink4.CONNECTOR_1,
                  macAddr: "01:01:01:0C:0C:0C",
-                 ipAddr: "192.168.6.1"
+                 ipAddr: "192.168.5.1"
                 ],
 
                 [virtual: true,
-                 lpName: "lp5",
+                 lpName: "lp6",
                  link: experiments.experiment1.links.P2PLink3.id,
                  connector: experiments.experiment1.links.P2PLink3.CONNECTOR_1,
                  macAddr: "01:01:01:0D:0D:0D",
-                 ipAddr: "192.168.5.1"
+                 ipAddr: "192.168.6.1"
                 ],
 
                 [virtual: true,
@@ -263,7 +263,7 @@ environments {
 
             arpTable = [:]
 
-            neighborTable = [["192.168.5.1", 5145],
+            neighborTable = [["192.168.5.2", 5145],
                              ["192.168.6.2", 5136]
                             ]
         }
@@ -299,7 +299,7 @@ environments {
             arpTable = [:]
 
             neighborTable = [["192.168.4.1", 5134],
-                             ["192.168.5.2", 5652]
+                             ["192.168.5.1", 5652]
                             ]
         }
     }
