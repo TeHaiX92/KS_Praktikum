@@ -13,7 +13,7 @@ environment = "LOCAL"
 debugLevel = [1,2,3,4,5,6]
 
 // Verzögerung in Millisekunden bei der Ausgabe von Utils.writelog (zum Mitlesen auf dem Terminal)
-debugDelay = 300
+debugDelay = 100
 
 // TCP-Schicht
 deltaTimeOut = common.utils.Utils.sec05 // Periode fuer Sendetimeout-Countdown
@@ -25,7 +25,7 @@ timeOut = deltaTimeOut * 5 // Timeout fuer Sendewiederholung
 globalNetMask = "255.255.255.0"
 
 // Zeitabstand in Sekunden, in dem von Routern periodisch Routinginformationen verschickt werden
-periodRInfo = 1000
+periodRInfo = 5000
 
 // Auswahl einer Ablaufumgebung durch Setzen der Konstanten "environment"
 environments {
@@ -43,24 +43,24 @@ environments {
 			ownMacAddr = "01:01:01:01:01:01"
 
 			// Eigene TCP- und UDP-Portnummer
-			ownPort = 5187
+			ownPort = 5110
 
 			// IP-Adresse des Servers
-			// serverIpAddr = "192.168.2.10"
+			 serverIpAddr = "192.168.2.10"
 
 			// Name des Servers
 			serverName = "meinhttpserver"
 
 			// TCP- und UDP-Portnummer der Serveranwendung
-			serverPort = 5110
+			serverPort = 5199
 
 			// Durch HTTP-GET-Request zu ladenden Dokument
-			// document = "index.html"
-			document = "daten"
+			 document = "index.html"
+			// document = "daten"
 
 			// IP-Adresse des Nameservers
 			nameServerIpAddr = "192.168.1.11"
-			nameServerPort = 5300
+			nameServerPort = 5111
 
 			// Standard-Router
                routerIpAddr = "192.168.1.1"
@@ -91,7 +91,7 @@ environments {
 		//=============================================================================================
 
 		server {
-			ownPort = 5210
+			ownPort = 5199
 			//defaultRouter = "0.0.0.0"
 			nameServer = "192.168.1.11"
 
@@ -117,7 +117,7 @@ environments {
 		//=============================================================================================
 
 		nameserver {
-			ownPort = 5300
+			ownPort = 5111
 			// defaultRouter = "0.0.0.0"
 
 			networkConnectors = [
@@ -142,7 +142,7 @@ environments {
 		//=============================================================================================
 
 		router1 {
-			ownPort = 5134
+			ownPort = 5121
 
 			networkConnectors = [
 				[
@@ -187,7 +187,7 @@ environments {
 		//=============================================================================================
 
 		router2 {
-			ownPort = 5136
+			ownPort = 5122
 
 			networkConnectors = [
 				[
@@ -226,21 +226,21 @@ environments {
 		//=============================================================================================
 
 		router3 {
-			ownPort = 5652
+			ownPort = 5123
 
 			networkConnectors = [
 					[
 					virtual: true,
 					lpName: "lp5",
-					link: experiments.experiment1.links.P2PLink4.id,
-					connector: experiments.experiment1.links.P2PLink4.CONNECTOR_1,
+					link: experiments.experiment1.links.P2PLink3.id,
+					connector: experiments.experiment1.links.P2PLink3.CONNECTOR_1,
 					macAddr: "01:01:01:0C:0C:0C",
 					ipAddr: "192.168.5.1"
 				], [
 					virtual: true,
 					lpName: "lp6",
-					link: experiments.experiment1.links.P2PLink3.id,
-					connector: experiments.experiment1.links.P2PLink3.CONNECTOR_1,
+					link: experiments.experiment1.links.P2PLink4.id,
+					connector: experiments.experiment1.links.P2PLink4.CONNECTOR_1,
 					macAddr: "01:01:01:0D:0D:0D",
 					ipAddr: "192.168.6.1"
 				], [
@@ -271,7 +271,7 @@ environments {
 		//=============================================================================================
 
 		router4 {
-			ownPort = 5145
+			ownPort = 5124
 
 			networkConnectors = [
 				[

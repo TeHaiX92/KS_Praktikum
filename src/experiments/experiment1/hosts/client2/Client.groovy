@@ -4,6 +4,8 @@ package experiments.experiment1.hosts.client2
 
 import common.utils.Utils
 import experiments.experiment1.stack.Stack
+import experiments.experiment1.stack.layer.idu.TA_IDU
+
 import java.util.regex.Matcher
 
 /**

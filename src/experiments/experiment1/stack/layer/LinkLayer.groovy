@@ -270,7 +270,7 @@ class LinkLayer {
                 AR_PDU ar_pdu = new AR_PDU()
                 ar_pdu.operation = ARP_REQUEST
                 ar_pdu.senderProtoAddr = ownIpAddrs[lpName] // IP-Adresse des Senders
-                ar_pdu.senderHardAddr = connector.getMacAddr() // MAC-Adresse des Senders
+                ar_pdu.senderHardAddr = macFrame.srcMacAddr // MAC-Adresse des Senders
 
                 ar_pdu.targetProtoAddr = il_idu.nextHopAddr // IP-Adresse des ARP-Ziels
                 ar_pdu.targetHardAddr = "unknown" // Gesuchter Eintrag
