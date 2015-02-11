@@ -146,6 +146,7 @@ class LinkLayer {
 
 									//Utils.writeLog("LinkLayer", "receive", "ARP-Reply von \u001B[36m${ar_pdu.senderProtoAddr}\u001B[0m erhalten: \u001B[36m${macAddr}\u001B[0m", 5)
 									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Reply\u001B[0m erhalten", 5)
+									arpTable.put(ar_pdu.senderProtoAddr, ar_pdu.senderHardAddr)
 
 									// MAC-Adresse an wartenden Sender-Thread uebergeben
 									arpQ.put(macAddr)
