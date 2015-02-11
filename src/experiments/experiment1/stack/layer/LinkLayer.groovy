@@ -159,6 +159,8 @@ class LinkLayer {
 									// ARP-Reply senden
 
 									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Request\u001B[0m erhalten", 5)
+									Utils.writeLog("LinkLayer", "verify", "TPA stimmt mit eigener NA ueberein", 5)
+									arpTable.put(ar_pdu.senderProtoAddr, ar_pdu.senderHardAddr)
 									Utils.writeLog("LinkLayer", "send", "sende \u001B[35mARP-Reply\u001B[0m", 5)
 
 									ar_pdu.operation = ARP_REPLY
@@ -184,6 +186,7 @@ class LinkLayer {
 								}
 								else {
 									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Request\u001B[0m erhalten", 5)
+									Utils.writeLog("LinkLayer", "verify", "TPA stimmt nicht mit eigener NA ueberein", 5)
 									Utils.writeLog("LinkLayer", "receive", "\u001B[35mARP-Request\u001B[0m verwerfen", 5)
 								}
 								break

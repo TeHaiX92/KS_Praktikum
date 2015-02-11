@@ -16,146 +16,177 @@ import java.util.regex.Matcher
  */
 class Server {
 
-    // Der Netzwerk-Protokoll-Stack
-    Stack stack
+	// Der Netzwerk-Protokoll-Stack
+	Stack stack
 
-    /** Konfigurations-Objekt */
-    ConfigObject config
+	/** Konfigurations-Objekt */
+	ConfigObject config
 
-    /** Stoppen der Threads wenn false */
-    Boolean run = true
+	/** Stoppen der Threads wenn false */
+	Boolean run = true
 
-    /** Der im HTTP-Request gelieferte Name des angeforderten Objekts*/
-    String name = ""
+	/** Der im HTTP-Request gelieferte Name des angeforderten Objekts*/
+	String name = ""
 
-    /** IP-Adresse und Portnummer des client */
-    String srcIpAddr
-    int srcPort
+	/** IP-Adresse und Portnummer des client */
+	String srcIpAddr
+	int srcPort
 
-    /** Eigene Portnummer */
-    int ownPort
+	/** Eigene Portnummer */
+	int ownPort
 
-    /** Anwendungsprotokolldaten als String */
-    String data
+	/** Anwendungsprotokolldaten als String */
+	String data
 
-    /** Länge der gesendeten Daten */
-    int dataLength = 0
+	/** Länge der gesendeten Daten */
+	int dataLength = 0
 
-    /** Antwort */
-    GString reply1 =
-            """\
+	/** Antwort */
+	GString reply1 =
+		"""\
 HTTP/1.1 200 OK
 Content-Length: ${->dataLength}
 Content-Type: text/plain
 
 """
 
-    GString reply2 =
-            """\
+	GString reply2 =
+		"""\
 Das Objekt ${->name} wurde angefragt!
 """
 
-    /** Ein Matcher-Objekt zur Verwendung regulärer Ausdruecke */
-    Matcher matcher
+	/** Ein Matcher-Objekt zur Verwendung regulärer Ausdruecke */
+	Matcher matcher
 
-    /** Daten empfangen solange false */
-    boolean ready = false
+	/** Daten empfangen solange false */
+	boolean ready = false
 
-    /**
-     * Start der Anwendung
-     */
-    static void main(String[] args) {
-        Server application = new Server()
-        application.server()
-    }
+	/**
+	 * Start der Anwendung
+	 */
+	static void main(String[] args) {
+		Server application = new Server()
+		application.server()
+	}
 
-    /**
-     * Ein HTTP-Server mit rudimentärer Implementierung des Protokolls HTTP (Hypertext Transfer Protocol)
-     */
-    void server() {
+	/**
+	 * Ein HTTP-Server mit rudimentärer Implementierung des Protokolls HTTP (Hypertext Transfer Protocol)
+	 */
+	void server() {
 
-        // Konfiguration holen
-        config = Utils.getConfig("experiment1", "server")
+		// Konfiguration holen
+		config = Utils.getConfig("experiment1", "server")
 
-        // Netzwerkstack initialisieren
-        stack = new Stack()
-        stack.start(config)
-        ownPort = config.ownPort
+		// Netzwerkstack initialisieren
+		stack = new Stack()
+		stack.start(config)
+		ownPort = config.ownPort
 
-        Utils.writeLog("Server", "server1", "startet", 1)
+		Utils.writeLog("Server", "server1", "startet", 1)
 
-        while (run) {
+		while (run) {
 
-            // Auf Empfang warten
-            (srcIpAddr, srcPort, data) = stack.udpReceive()
+			// Auf Empfang warten
+			(srcIpAddr, srcPort, data) = stack.udpReceive()
 
-            Utils.writeLog("Server", "receives", "empfängt: $data", 1)
+			Utils.writeLog("Server", "receives", "empfängt: $data", 1)
 
-            // Abbruch wenn Länge der empfangenen Daten == 0
-            if (!data)
-                break
+			// Abbruch wenn Länge der empfangenen Daten == 0
+			if (!data) {
+				break
+			}
 
-            // Parsen des HTTP-Kommandos
-            matcher = (data =~ /GET\s*\/(.*?)\s*HTTP\/1\.1/)
+			// Parsen des HTTP-Kommandos
+			matcher = (data =~ /GET\s*\/(.*?)\s*HTTP\/1\.1/)
 
-            name = ""
+			name = ""
 
-            // Wurde das Header-Feld gefunden?
-            if (matcher) {
-                // Ja
-                // Name des zu liefernden Objekts
-                name = (matcher[0] as List<String>)[1]
+			// Wurde das Header-Feld gefunden?
+			if (matcher) {
+				// Ja
+				// Name des zu liefernden Objekts
+				name = (matcher[0] as List<String>)[1]
 
-                String reply = ""
+				String reply = ""
 
-                switch (name) {
-                    case "index.html":
-                        // Antwort erzeugen
-                        String temp = reply2 // name wird eingetragen
-                        dataLength = reply2.size()
-                        reply = reply1 + temp // dabei wird dataLength in reply1 eingetragen
+				switch (name) {
+					case "index.html":
+						// Antwort erzeugen
+						String temp = reply2 // name wird eingetragen
+						dataLength = reply2.size()
+						reply = reply1 + temp // dabei wird dataLength in reply1 eingetragen
 
-                        // Antwort senden
-                        stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
+						// Antwort senden
+						Utils.writeLog("Server", "server", "sendet: $reply", 11)
+						stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
 
-                        break
+						break
 
-                    case "daten":
-                        // hier langen HTTP-body (einige kByte) erzeugen um lang anhaltende Übertragung zu erreichen
-                        data = "<body><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p><p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p><p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.</p><p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero.</p><p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p><p>Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui.</p></body>"
-                        dataLength = data.size()
-                        reply = reply1 // dabei wird dataLength in reply1 eingetragen
-                        stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
+					case "daten":
+						data = "<body><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
+							"Aenean commodo ligula eget dolor. Aenean massa. " +
+							"Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus " +
+							"mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. " +
+							"Nulla consequat massa quis enim.</p>" +
+							"<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
+							"In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. " +
+							"Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. " +
+							"Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. " +
+							"Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>" +
+							"<p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. " +
+							"Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. " +
+							"Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies " +
+							"nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum " +
+							"rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. " +
+							"Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.</p>" +
+							"<p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero " +
+							"venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus " +
+							"tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis " +
+							"magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis " +
+							"gravida magna mi a libero.</p><p>Fusce vulputate eleifend sapien. Vestibulum " +
+							"purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem " +
+							"in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante " +
+							"ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; " +
+							"In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis " +
+							"arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p>" +
+							"<p>Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer " +
+							"eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum " +
+							"rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. " +
+							"Cras id dui.</p></body>"
 
-                        reply = ""
-                        int currentByte = 0
-                        int packageLength = 300
-                        int step = 0
+						dataLength = data.size()
+						reply = reply1 // dabei wird dataLength in reply1 eingetragen
 
-                        while (dataLength >= currentByte + reply.size()) {
-                            if (reply.size() + currentByte + packageLength > dataLength) {
-                                step = dataLength - currentByte - reply.size()
-                            } else {
-                                step = packageLength - 1 - reply.size()
-                            }
+						Utils.writeLog("Server", "server", "sendet: $reply", 11)
+						stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
 
-                            reply += data.subSequence(currentByte, currentByte + step)
-                            // Antwort senden
-                            stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
-                            currentByte += packageLength - 1
-                            reply = ""
+						reply = ""
+						int currentByte = 0
+						int packageLength = 300
+						int step
 
-                            sleep(300)
-                        }
+						// Daten in mehrere Segmente aufteilen und Segmente senden
+						while (dataLength >= currentByte + reply.size()) {
+							if (reply.size() + currentByte + packageLength > dataLength) {
+								step = dataLength - currentByte - reply.size()
+							} else {
+								step = packageLength - 1 - reply.size()
+							}
 
-                        break
-                }
+							reply += data.subSequence(currentByte, currentByte + step)
 
-                //Utils.writeLog("Server", "server", "sendet: $reply", 11)
+							// Antwort senden
+							Utils.writeLog("Server", "server", "sendet: $reply", 11)
+							stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
+							currentByte += packageLength - 1
+							reply = ""
 
-                // Antwort senden
-                //stack.udpSend(dstIpAddr: srcIpAddr, dstPort: srcPort,srcPort: ownPort, sdu: reply)
-            }
-        } // while
-    }
+							sleep(300)
+						}
+
+						break
+				}
+			}
+		}
+	}
 }

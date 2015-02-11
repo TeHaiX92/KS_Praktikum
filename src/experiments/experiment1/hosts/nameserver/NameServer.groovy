@@ -18,9 +18,7 @@ class NameServer {
 
 	/** Tabelle zur Umsetzung von Namen in IP-Adressen */
 	Map<String, String> nameTable = [
-		"meinhttpserver": "192.168.2.10",
-		"alice"         : "0.0.0.0",
-		"bob"           : "0.0.0.0",
+		"meinhttpserver": "192.168.2.10"
 	]
 
 	String srcIpAddr
@@ -40,7 +38,7 @@ class NameServer {
 	 */
 	void nameserver() {
 
-		// Konfiguration holen
+		// Konfiguration des Nameservers holen
 		config = Utils.getConfig("experiment1", "nameserver")
 
 		// Netzwerkstack initialisieren
@@ -56,11 +54,13 @@ class NameServer {
 
 			// Namen über nameTable in IP-Adresse aufloesen
 			Utils.writeLog("Nameserver", "receive", "DNS-Anfrage zur Aufloesung des Hosts \u001B[36m${data}\u001B[0m wurde erhalten", 1)
+
+
 			String ipAddr = nameTable.get(data)
 			if (ipAddr) {
 				Utils.writeLog("Nameserver", "solve", "DNS-Anfrage aufgeloest in \u001B[36m$ipAddr\u001B[0m", 1)
 			} else {
-				Utils.writeLog("Nameserver", "error", "\u001B[36m$data\u001B[0m wurde nicht gefunden", 1)
+				Utils.writeLog("Nameserver", "error", "DNS konnte die IP-Adresse fuer den Host \u001B[36m$data\u001B[0m nicht finden", 1)
 				ipAddr = "0.0.0.0"
 			}
 

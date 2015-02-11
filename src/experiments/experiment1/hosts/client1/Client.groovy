@@ -9,36 +9,32 @@ import java.util.regex.Matcher
 /**
  * Einfacher HTTP-Client.<br/>
  * Sendet einen HTTP-GET-Request an einen HTTP-Server und gibt das empfangene Dokument an das Terminal aus.<br/>
- * Zum Transport wird UDP verwendet. Der Client ist dadurch nicht für die Kommunikation mit realen HTTP-Servern <br/>
- * verwendbar, da diese stets TCP verwenden!
+ * Zum Transport wird UDP verwendet.
  */
 class Client {
 
-	/** Der Netzwerk-Protokoll-Stack */
+	// Netzwerk-Protokoll-Stack
 	Stack stack
 
-	/** Konfiguration des Geräts.<br/>
-	 *  Erster Parameter: der Name des Verzeichnisses, der den Versuch enthält<br/>
-	 *  Zweiter Parameter: Name der Konfiguation fuer dieses Gerät in der Konfigurationsdatei
-	 */
+	// Konfiguration des Clients holen
 	ConfigObject config = Utils.getConfig("experiment1", "client")
 
-	/** Stoppen der Threads wenn false */
+	// Stoppen der Threads wenn false
 	Boolean run = true
 
-	/** Ziel-IP-Adresse */
+	// Ziel-IP-Adresse
 	String serverIpAddr
 
-	/** Zielportadresse */
+	// Zielportadresse
 	int serverPort
 
-	/** Nameserver-IP-Adresse */
+	// Nameserver-IP-Adresse
 	String nameserverIpAddr
 
-	/** Nameserver-Portadresse */
+	// Nameserver-Portadresse
 	int nameserverPort
 
-	/** HTTP-Header fuer GET-Request **/
+	// HTTP-Header fuer GET-Request
 	String request =
 		"""\
 GET /${config.document} HTTP/1.1
@@ -46,14 +42,14 @@ GET /${config.document} HTTP/1.1
 
 """
 
-	/** Eigene Portadresse */
+	// Eigene Portadresse
 	int ownPort
 
 	/** Anwendungs-PDU */
 	String apdu
 
-    String srcIpAddr
-    int srcPort
+	String srcIpAddr
+	int srcPort
 
 	/** Anwendungsprotokolldaten als String */
 	String data
@@ -93,7 +89,7 @@ GET /${config.document} HTTP/1.1
 
 	/**
 	 * Ein HTTP-Client mit rudimentärer Implementierung des Protokolls HTTP (Hypertext Transfer Protocol).<br/>
-	 * Verwendet das TCP-Protokoll.
+	 * Verwendet das UDP-Protokoll.
 	 */
 	void client() {
 
@@ -133,9 +129,9 @@ GET /${config.document} HTTP/1.1
 		if (!Utils.isIp(serverIpAddr)) {
 			Utils.writeLog("Client", "client", "DNS could not find the ip for the host: $config.serverName", 1)
 		}*/
-// ----------------------------------------------------------
-// HTTP-GET-Request absenden
-        serverIpAddr = data
+		// ----------------------------------------------------------
+		// HTTP-GET-Request absenden
+		serverIpAddr = data
 		Utils.writeLog("Client", "send", "sendet: ${request} to $serverIpAddr", 1)
 		stack.udpSend(dstIpAddr: serverIpAddr, dstPort: serverPort,
 			srcPort: ownPort, sdu: request)
