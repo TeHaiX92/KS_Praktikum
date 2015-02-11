@@ -1,61 +1,40 @@
 package experiments.experiment1.stack.fsm
-
 /**
  * Definition der möglichen Zustände der FSM.
  */
 class State {
-	/** Leerlauf */
+/** Leerlauf */
 	static final int S_IDLE = 100
-
-	/** Auf SYN+ACK wartend */
+/** Auf SYN+ACK wartend */
 	static final int S_WAIT_SYN_ACK = 110
-
-	// NEU
-	static final int S_SEND_SYN_ACK = 115
-
-	/** Wartend */
+/** Wartend */
 	static final int S_READY = 120
-
-	/** Senden von ACK als Abschluß der Verbindungseröffnung */
+/** Senden von ACK als Abschluß der Verbindungseröffnung */
 	static final int S_SEND_SYN_ACK_ACK = 180
-
-	// NEU
-	static final int S_WAIT_SYN_ACK_ACK = 185
-
-	/** Auf FIN+ACK wartend */
+/** Auf FIN+ACK wartend */
 	static final int S_WAIT_FIN_ACK = 190
-
-	/** Senden von ACK als Abschluß der Verbindungbeendigung */
+/** Senden von ACK als Abschluß der Verbindungbeendigung */
 	static final int S_SEND_FIN_ACK_ACK = 200
-
-	/** Daten wurden empfangen */
+/** Daten wurden empfangen */
 	static final int S_RCVD_DATA = 210
-
-	/** ACK wurde empfangen */
+/** ACK wurde empfangen */
 	static final int S_RCVD_ACK = 220
-
-	/** SYN zur Verbindungseröffnung wird gesendet */
+/** SYN zur Verbindungseröffnung wird gesendet */
 	static final int S_SEND_SYN = 230
-
-	// NEU
-	static final int S_WAIT_SYN = 235
-
-	/** SYN zur Verbindungsbeendigung wird gesendet */
+/** SYN+ACK wurde gesendet*/
+	static final int S_SEND_SYN_ACK = 235
+/** SYN+ACK+ACK warten auf*/
+	static final int S_WAIT_SYN_ACK_ACK = 238
+/** SYN zur Verbindungsbeendigung wird gesendet */
 	static final int S_SEND_FIN = 240
-
-	// NEU
+/** FIN+ACK senden*/
 	static final int S_SEND_FIN_ACK = 245
-
-	//NEU
-	static final int S_WAIT_FIN_ACK_ACK = 255
-
-	/** Daten werden gesendet */
+/** FIN+ACK+ACk warten*/
+	static final int S_WAIT_FIN_ACK_ACK = 248
+/** Daten werden gesendet */
 	static final int S_SEND_DATA = 250
-
-	// NEU
-	static final int S_RCVD_SYN_ACK_ACK = 260
-
-	// NEU
-	static final int S_RCVD_FIN_ACK_ACK = 270
-
+/** Verbindung schließen HACK */
+	static final int S_RCVD_CLS = 260
+/** verbindung öffnen Hack */
+	static final int S_RCVD_OPN = 270
 }

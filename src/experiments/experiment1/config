@@ -16,8 +16,8 @@ debugLevel = [1,2,3,4,5,6]
 debugDelay = 100
 
 // TCP-Schicht
-deltaTimeOut = common.utils.Utils.sec05 // Periode fuer Sendetimeout-Countdown
-timeOut = deltaTimeOut * 5 // Timeout fuer Sendewiederholung
+deltaTimeOut = common.utils.Utils.sec10 // Periode fuer Sendetimeout-Countdown
+timeOut = deltaTimeOut * 10 // Timeout fuer Sendewiederholung
 
 // IP-Schicht
 // eine einheitliche Subnet-Maske fuer alle
