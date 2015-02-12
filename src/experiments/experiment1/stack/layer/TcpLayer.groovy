@@ -144,7 +144,7 @@ class TcpLayer {
 				// Passiver Verbindungsaufbau SERVER
 				[on: Event.E_RCVD_SYN, from: State.S_IDLE, to: State.S_SEND_SYN_ACK],
 				[on: Event.E_SYN_ACK_SENT, from: State.S_SEND_SYN_ACK, to: State.S_WAIT_SYN_ACK_ACK],
-				[on: Event.E_RCVD_SYN_ACK_ACK, from: State.S_WAIT_SYN_ACK_ACK, to: State.S_READY],
+				[on: Event.E_RCVD_ACK, from: State.S_WAIT_SYN_ACK_ACK, to: State.S_READY],
 				//[on: Event.E_RCVD_SYN_ACK_ACK, from: State.S_WAIT_SYN_ACK_ACK, to: State.S_RCVD_OPN],
 				//[on: Event.E_READY, from: State.S_RCVD_OPN, to: State.S_READY],
 
@@ -439,7 +439,7 @@ class TcpLayer {
 				case (State.S_WAIT_SYN_ACK_ACK):
 
 					// Neuen Zustand der FSM erzeugen
-					fsm.fire(Event.E_RCVD_SYN_ACK_ACK)
+					fsm.fire(Event.E_RCVD_ACK)
 
 					// Hergestellte Verbindung signalisieren
 					notifyOpen()
@@ -541,6 +541,8 @@ class TcpLayer {
 
 						// Daten uebernehmen
 						ta_idu.sdu = recvData
+						ta_idu.srcPort = ownPort
+						ta_idu.srcIpAddr =
 
 						// IDU an Anwendung übergeben
 						toAppQ.put(ta_idu)
@@ -659,7 +661,8 @@ class TcpLayer {
 					Utils.writeLog("TcpLayer", "timeOut", "Sendewiederholung: ${m.idu}", 2)
 
 					m.timeOut = timeOut // Timeout neu setzen
-					toIpQ.put(m.idu) // IDU an IP uebergeben
+					TRI_IDU tmp = m.idu
+					toIpQ.put(tmp) // IDU an IP uebergeben
 				}
 			}
 		}
