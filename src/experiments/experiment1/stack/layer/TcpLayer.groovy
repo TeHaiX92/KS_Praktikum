@@ -107,7 +107,7 @@ class TcpLayer {
 	boolean sendAckFlag
 	boolean sendSynFlag
 	boolean sendFinFlag
-	boolean sendRstFlag = false
+	boolean sendRstFlag
 	int sendSeqNum
 	int sendAckNum
 	int sendWindSize
@@ -119,7 +119,7 @@ class TcpLayer {
 	boolean recvAckFlag
 	boolean recvFinFlag
 	boolean recvSynFlag
-	boolean recvRstFlag = false
+	boolean recvRstFlag
 	int recvWindSize
 	String recvData
 	//------------------------------------------------------------------------------
@@ -536,16 +536,24 @@ class TcpLayer {
 						sendRstFlag = false
 						sendData = ""
 
+						Utils.writeLog("TcpLayer", "log", "ALARM!", 2)
+
 						TA_IDU ta_idu = new TA_IDU()
 						ta_idu.connId = connId
 
 						// Daten uebernehmen
 						ta_idu.sdu = recvData
-						ta_idu.srcPort = ownPort
-						ta_idu.srcIpAddr =
+						//ta_idu.srcPort = ownPort
+						//println(ta_idu.srcPort)
+						//ta_idu.srcIpAddr = dstIpAddr
+						//println(ta_idu.srcIpAddr)
 
 						// IDU an Anwendung übergeben
 						toAppQ.put(ta_idu)
+
+						for ( e in toAppQ ) {
+							print "srcIpAddr = ${e.srcIpAddr}, srcPort = ${e.srcPort}, sdu = ${e.sdu}"
+						}
 
 						recvData = ""
 

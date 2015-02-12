@@ -111,8 +111,10 @@ Host: www.sesam-strasse.com
         // ------------------------------------------------------------
 
         // IPv4-Adresse und Portnummer des HTTP-Dienstes
-        serverIpAddr = config.serverIpAddr
+        // serverIpAddr = config.serverIpAddr
         serverPort = config.serverPort
+
+
 
         // Netzwerkstack initialisieren
         stack = new Stack()
@@ -123,6 +125,26 @@ Host: www.sesam-strasse.com
         Utils.writeLog("Client", "client", "startet", 1)
 
         // ------------------------------------------------------------
+
+        Utils.writeLog("Client", "send", "sende DNS-Anfrage um den Host \u001B[36m${config.serverName}\u001B[0m aufzuloesen", 1)
+
+        // Datenempfang vorbereiten
+        data = ""
+        state = WAIT_LENGTH
+
+        String nameserverIpAddr = config.nameServerIpAddr
+        int nameserverPort = config.nameServerPort
+
+        // HTTP-GET-Request absenden
+        stack.udpSend(dstIpAddr: nameserverIpAddr, dstPort: nameserverPort,
+                srcPort: ownPort, sdu: config.serverName)
+
+        String srcIpAddr
+        int srcPort
+
+        (srcIpAddr, srcPort, data) = stack.udpReceive()
+
+        serverIpAddr = data
 
         // Eine TCP-Verbindung öffnen
         connId = stack.tcpOpen(dstIpAddr: serverIpAddr, dstPort: serverPort)
@@ -168,7 +190,7 @@ Host: www.sesam-strasse.com
         } // if
 
         // Verbindung schliessen
-        stack.tcpClose(connId: connId)
+        //stack.tcpClose(connId: connId)
     }
     //------------------------------------------------------------------------------
 
